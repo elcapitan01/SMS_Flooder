@@ -4,10 +4,11 @@
 from twilio.rest import TwilioRestClient
 import os
 import time
-#
+
 os.system('clear')
 ACCOUNT_SID = ""
 AUTH_TOKEN = ""
+from_ = ""
 client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
 
 global end, verde, azul, amarelo, vermelho, purpleClaro, normal, cyanClaro
@@ -113,17 +114,16 @@ def Ma1n():
 	print('')
 	to =   raw_input(cyanClaro + '[*] Digite numero do alvo > ')
 	print('')
-	from_ = ""
 	img =  raw_input(amarelo + "[*] Deseja enviar uma imagem? [y/N] > ")
 	if img == 'y':
 		img2 = raw_input(amarelo + '[*] Deseja enviar mais de uma (1) imagens? [y/N] > ')
 		print('')
 		if img2 == 'n':
-			SendImage()
+			SendImage(to)
 		elif img2 == 'y':
-			MultipleImages()
+			MultipleImages(to)
 	elif img == 'n':
-		SendMessage()
+		SendMessage(to)
 	else:
 		print('')
 		print(vermelho + '[-] Wrong option...\n')
@@ -131,7 +131,7 @@ def Ma1n():
 	return body, to, from_
 
 
-def SendMessage():
+def SendMessage(to):
 	message = client.messages.create(
 	    body = body, 	
     	to = to,
@@ -143,7 +143,7 @@ def SendMessage():
 	print (vermelho + '[*] ID > '+azul+message.sid+end)
 	print('')
 
-def SendImage():
+def SendImage(to):
 	media_url = raw_input("[*] Digite a url da sua imagem > ")
 	message = client.messages.create(	
    		body = body, 
@@ -155,7 +155,7 @@ def SendImage():
 	print ('[+] '+verde+'✉'+vermelho+' Imagem  Enviada Com Sucesso!' + end)
 	print('')
 
-def MultipleImages():
+def MultipleImages(to):
 	numbers = raw_input(amarelo + '[*] Digite o numero de imagens [2/3] > ')
 	print('')
 	if numbers == '2':
@@ -203,18 +203,12 @@ def Retrieving():
 		print ("Historico de mensagens Enviadas > ", Historico )
 
 
-def SPAM():
+def SpamNumber():
 	global body, to, from_
-	print(vermelho + "+==========================================+")
-	print(vermelho + "|              ✉ SPAM MODE ✉               |")
-	print(vermelho + "+==========================================+")
-	print('')
 	body = raw_input(cyanClaro + "[*] Digite sua Mensagem > ")
 	print('')
-	wordlist =   raw_input(cyanClaro + '[*] Digite Sua Lista de Numeros > ')
+	to =   raw_input(cyanClaro + '[*] Digite numero do alvo > ')
 	print('')
-	to = open(wordlist, 'r').readlines()
-	from_ = "+19402023964 "
 	FloodNumber = int(input(verde + "Digite o numero de Flooder > "))
 	print('')
 	img =  raw_input(amarelo + "[*] Deseja enviar uma imagem? [y/N] > ")
@@ -224,17 +218,60 @@ def SPAM():
 		print('')
 		if img2 == 'n':
 			for i in rage(1, FloodNumber+1):
-				SendImage()
+				SendImage(to)
 				print purpleClaro + "\r ✉ SMS - Flooder ✉ - Total enviados > %i" % i
 				print('')
 		elif img2 == 'y':
 			for i in rage(1, FloodNumber+1):
-				MultipleImages()
+				MultipleImages(to)
 				print purpleClaro + "\r ✉ SMS - Flooder ✉ - Total enviados > %i" % i
 				print('')
 
 	for i in range(1, FloodNumber+1):
-		SendMessage()
+		SendMessage(to)
+		print purpleClaro + "\r ✉ SMS - Flooder ✉ - Total enviados > %i" % i
+		print('')
+
+
+def SPAM():
+	global body, to, from_
+	print(vermelho + "+==========================================+")
+	print(vermelho + "|              ✉ SPAM MODE ✉               |")
+	print(vermelho + "+==========================================+")
+	print('')
+	options = raw_input(verde+"[+] Deseja Usar uma lista de Numeros (n/Y)?")
+	if options == 'n'.lower():
+		SpamNumber()
+		exit()
+	else:
+		pass
+	print('')	
+	body = raw_input(cyanClaro + "[*] Digite sua Mensagem > ")
+	print('')
+	wordlist =   raw_input(cyanClaro + '[*] Digite Sua Lista de Numeros > ')
+	print('')
+	to = open(wordlist, 'r').readlines()
+	from_ = from_
+	FloodNumber = int(input(verde + "Digite o numero de Flooder > "))
+	print('')
+	img =  raw_input(amarelo + "[*] Deseja enviar uma imagem? [y/N] > ")
+	print('')
+	if img == 'y':
+		img2 = raw_input(amarelo + '[*] Deseja enviar mais de uma (1) imagens? [y/N] > ')
+		print('')
+		if img2 == 'n':
+			for i in rage(1, FloodNumber+1):
+				SendImage(to)
+				print purpleClaro + "\r ✉ SMS - Flooder ✉ - Total enviados > %i" % i
+				print('')
+		elif img2 == 'y':
+			for i in rage(1, FloodNumber+1):
+				MultipleImages(to)
+				print purpleClaro + "\r ✉ SMS - Flooder ✉ - Total enviados > %i" % i
+				print('')
+
+	for i in range(1, FloodNumber+1):
+		SendMessage(to)
 		print purpleClaro + "\r ✉ SMS - Flooder ✉ - Total enviados > %i" % i
 		print('')
 
