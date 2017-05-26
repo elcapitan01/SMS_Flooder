@@ -1,50 +1,33 @@
 #/usr/bin/python3
 # -*- coding:utf-8 -*-
-
-from twilio.rest import TwilioRestClient
-import os, sys
+try:
+	from twilio.rest import TwilioRestClient
+except:
+	print('')
+	print('pip install twilio')
+	print('easy install twilio')
+	exit()
+import os
 import time
-
+#
 os.system('clear')
 ACCOUNT_SID = ""
 AUTH_TOKEN = ""
 from_ = ""
-#client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
+client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
 
-global end, verde, azul, amarelo, vermelho, purpleClaro, normal, cyanClaro, W, R, G, O, B, P, C, GR
+global end, verde, azul, amarelo, vermelho, purpleClaro, normal, cyanClaro,
 end = '\033[0m'
-# Colors
-
-W  = '\033[0m'  # white (default)
-R  = '\033[31m' # red
-G  = '\033[1;32m' # green bold
-O  = '\033[33m' # orange
-B  = '\033[34m' # blue
-P  = '\033[35m' # purple
-C  = '\033[36m' # cyan
-GR = '\033[37m' # gray
+#Palheta de Cores
 cyanClaro="\033[1;36m"
 vermelho = '\033[31;1m'
 verde = '\033[32;1m'
 azul = '\033[34;1m'
-amarelo= '\033[1;33m'
 normal = '\033[0;0m'
 purpleClaro= '\033[1;35m'
+amarelo= '\033[1;33m'
 
 
-def slowprint(s):
-    for c in s + '\n':
-        sys.stdout.write(c)
-        sys.stdout.flush() # defeat buffering
-time.sleep(8./90)
-
-def Animation(String):
-    animation = "|/-\\"
-    for i in range(15):
-        time.sleep(0.1)
-        sys.stdout.write("\r" + "[" + animation[i % len(animation)] + "]" + G + String)
-        sys.stdout.flush()
-print('')
 
 BannerOld = """
 ____________¶¶¶
@@ -61,7 +44,7 @@ ____¶_________________¶              +========================================
 ____¶_____¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶            |      SMS Sending Spam and Flooder        |
 ____¶____¶_______________¶           +==========================================+
 ____¶____¶___¶¶¶¶¶¶¶¶¶¶¶¶¶           | ♚ Coded: łuŧЋ1єr ルシアー                |
-____¶___¶___¶___________¶¶¶          | ♚ Contact: @DreadPirateRobertt (Telegram)|
+____¶___¶___¶___________¶¶¶          | ♚ Contact: @Xcultevil (Telegram)         |
 ____¶___¶___¶_¶¶¶___¶¶¶__¶¶          | ♚ Date: 07/03/2017                       |
 ____¶___¶___¶_¶¶¶___¶¶¶__¶¶          | ♚ I take no responsibilities for the     |
 ____¶___¶___¶___________¶¶¶          |   use of this program !                  |
@@ -73,7 +56,9 @@ ____¶___¶__¶__¶__¶__¶                          [1] ✉ Mensagem Normal
 ____¶__¶¶¶¶¶¶¶¶¶¶¶¶¶¶                          [2] ✉ Spam
 ____¶__¶___¶__¶__¶__¶                          [3] ✉ Historico de Mensagens
 ____¶___¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-___¶¶¶_________________¶¶¶"""
+___¶¶¶_________________¶¶¶
+
+"""
 
 BannerEnd = """_____________¶____¶ 
 _________¶_¶¶¶¶¶¶¶¶¶¶ 
@@ -118,11 +103,6 @@ _¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶"""
 
 
 print azul + BannerOld
-print('')
-slowprint(P+" ♚ Coded: łuŧЋ1єr ルシアー ")
-print('')
-Animation(" ✉ SMS - Flooder ✉  ")
-print('')
 
 try:
 	opt = raw_input(amarelo + '[*] Choose an Option > ')
@@ -139,16 +119,17 @@ def Ma1n():
 	print('')
 	to =   raw_input(cyanClaro + '[*] Digite numero do alvo > ')
 	print('')
+	from_ = ""
 	img =  raw_input(amarelo + "[*] Deseja enviar uma imagem? [y/N] > ")
 	if img == 'y':
 		img2 = raw_input(amarelo + '[*] Deseja enviar mais de uma (1) imagens? [y/N] > ')
 		print('')
 		if img2 == 'n':
-			SendImage(to)
+			SendImage()
 		elif img2 == 'y':
-			MultipleImages(to)
+			MultipleImages()
 	elif img == 'n':
-		SendMessage(to)
+		SendMessage()
 	else:
 		print('')
 		print(vermelho + '[-] Wrong option...\n')
@@ -156,7 +137,7 @@ def Ma1n():
 	return body, to, from_
 
 
-def SendMessage(to):
+def SendMessage():
 	message = client.messages.create(
 	    body = body, 	
     	to = to,
@@ -168,10 +149,7 @@ def SendMessage(to):
 	print (vermelho + '[*] ID > '+azul+message.sid+end)
 	print('')
 
-def SendImage(to):
-	print('')
-	Animation(" ✉ SMS - Flooder ✉  ")
-	print('')
+def SendImage():
 	media_url = raw_input("[*] Digite a url da sua imagem > ")
 	message = client.messages.create(	
    		body = body, 
@@ -183,7 +161,7 @@ def SendImage(to):
 	print ('[+] '+verde+'✉'+vermelho+' Imagem  Enviada Com Sucesso!' + end)
 	print('')
 
-def MultipleImages(to):
+def MultipleImages():
 	numbers = raw_input(amarelo + '[*] Digite o numero de imagens [2/3] > ')
 	print('')
 	if numbers == '2':
@@ -231,55 +209,18 @@ def Retrieving():
 		print ("Historico de mensagens Enviadas > ", Historico )
 
 
-def SpamNumber():
-	global body, to, from_
-	body = raw_input(cyanClaro + "[*] Digite sua Mensagem > ")
-	print('')
-	to =   raw_input(cyanClaro + '[*] Digite numero do alvo > ')
-	print('')
-	FloodNumber = int(input(verde + "Digite o numero de Flooder > "))
-	print('')
-	img =  raw_input(amarelo + "[*] Deseja enviar uma imagem? [y/N] > ")
-	print('')
-	if img == 'y':
-		img2 = raw_input(amarelo + '[*] Deseja enviar mais de uma (1) imagens? [y/N] > ')
-		print('')
-		if img2 == 'n':
-			for i in rage(1, FloodNumber+1):
-				SendImage(to)
-				print purpleClaro + "\r ✉ SMS - Flooder ✉ - Total enviados > %i" % i
-				print('')
-		elif img2 == 'y':
-			for i in rage(1, FloodNumber+1):
-				MultipleImages(to)
-				print purpleClaro + "\r ✉ SMS - Flooder ✉ - Total enviados > %i" % i
-				print('')
-
-	for i in range(1, FloodNumber+1):
-		SendMessage(to)
-		print purpleClaro + "\r ✉ SMS - Flooder ✉ - Total enviados > %i" % i
-		print('')
-
-
 def SPAM():
 	global body, to, from_
 	print(vermelho + "+==========================================+")
 	print(vermelho + "|              ✉ SPAM MODE ✉               |")
 	print(vermelho + "+==========================================+")
 	print('')
-	options = raw_input(verde+"[+] Deseja Usar uma lista de Numeros (n/Y)?")
-	if options == 'n'.lower():
-		SpamNumber()
-		exit()
-	else:
-		pass
-	print('')	
 	body = raw_input(cyanClaro + "[*] Digite sua Mensagem > ")
 	print('')
 	wordlist =   raw_input(cyanClaro + '[*] Digite Sua Lista de Numeros > ')
 	print('')
 	to = open(wordlist, 'r').readlines()
-	from_ = from_
+	from_ = "+19402023964 "
 	FloodNumber = int(input(verde + "Digite o numero de Flooder > "))
 	print('')
 	img =  raw_input(amarelo + "[*] Deseja enviar uma imagem? [y/N] > ")
@@ -289,17 +230,17 @@ def SPAM():
 		print('')
 		if img2 == 'n':
 			for i in rage(1, FloodNumber+1):
-				SendImage(to)
+				SendImage()
 				print purpleClaro + "\r ✉ SMS - Flooder ✉ - Total enviados > %i" % i
 				print('')
 		elif img2 == 'y':
 			for i in rage(1, FloodNumber+1):
-				MultipleImages(to)
+				MultipleImages()
 				print purpleClaro + "\r ✉ SMS - Flooder ✉ - Total enviados > %i" % i
 				print('')
 
 	for i in range(1, FloodNumber+1):
-		SendMessage(to)
+		SendMessage()
 		print purpleClaro + "\r ✉ SMS - Flooder ✉ - Total enviados > %i" % i
 		print('')
 
