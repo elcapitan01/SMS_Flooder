@@ -2,27 +2,49 @@
 # -*- coding:utf-8 -*-
 
 from twilio.rest import TwilioRestClient
-import os
+import os, sys
 import time
 
 os.system('clear')
 ACCOUNT_SID = ""
 AUTH_TOKEN = ""
 from_ = ""
-client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
+#client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
 
-global end, verde, azul, amarelo, vermelho, purpleClaro, normal, cyanClaro
+global end, verde, azul, amarelo, vermelho, purpleClaro, normal, cyanClaro, W, R, G, O, B, P, C, GR
 end = '\033[0m'
-#Palheta de Cores
+# Colors
+
+W  = '\033[0m'  # white (default)
+R  = '\033[31m' # red
+G  = '\033[1;32m' # green bold
+O  = '\033[33m' # orange
+B  = '\033[34m' # blue
+P  = '\033[35m' # purple
+C  = '\033[36m' # cyan
+GR = '\033[37m' # gray
 cyanClaro="\033[1;36m"
 vermelho = '\033[31;1m'
 verde = '\033[32;1m'
 azul = '\033[34;1m'
+amarelo= '\033[1;33m'
 normal = '\033[0;0m'
 purpleClaro= '\033[1;35m'
-amarelo= '\033[1;33m'
 
 
+def slowprint(s):
+    for c in s + '\n':
+        sys.stdout.write(c)
+        sys.stdout.flush() # defeat buffering
+time.sleep(8./90)
+
+def Animation(String):
+    animation = "|/-\\"
+    for i in range(15):
+        time.sleep(0.1)
+        sys.stdout.write("\r" + "[" + animation[i % len(animation)] + "]" + G + String)
+        sys.stdout.flush()
+print('')
 
 BannerOld = """
 ____________¶¶¶
@@ -51,9 +73,7 @@ ____¶___¶__¶__¶__¶__¶                          [1] ✉ Mensagem Normal
 ____¶__¶¶¶¶¶¶¶¶¶¶¶¶¶¶                          [2] ✉ Spam
 ____¶__¶___¶__¶__¶__¶                          [3] ✉ Historico de Mensagens
 ____¶___¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-___¶¶¶_________________¶¶¶
-
-"""
+___¶¶¶_________________¶¶¶"""
 
 BannerEnd = """_____________¶____¶ 
 _________¶_¶¶¶¶¶¶¶¶¶¶ 
@@ -98,6 +118,11 @@ _¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶"""
 
 
 print azul + BannerOld
+print('')
+slowprint(P+" ♚ Coded: łuŧЋ1єr ルシアー ")
+print('')
+Animation(" ✉ SMS - Flooder ✉  ")
+print('')
 
 try:
 	opt = raw_input(amarelo + '[*] Choose an Option > ')
@@ -144,6 +169,9 @@ def SendMessage(to):
 	print('')
 
 def SendImage(to):
+	print('')
+	Animation(" ✉ SMS - Flooder ✉  ")
+	print('')
 	media_url = raw_input("[*] Digite a url da sua imagem > ")
 	message = client.messages.create(	
    		body = body, 
