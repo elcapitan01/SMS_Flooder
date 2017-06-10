@@ -163,7 +163,7 @@ def SendMessage(to):
     	from_ = from_,
 	)
 	print('')
-	print(verde +'✉ SMS - Flooder ✉')
+	print(verde +'✉ SMS - Flooder ✉ %s' % to)
 	print('')
 	print (vermelho + '[*] ID > '+azul+message.sid+end)
 	print('')
@@ -299,7 +299,8 @@ def SPAM():
 				print('')
 
 	for i in range(1, FloodNumber+1):
-		SendMessage(to)
+		for Number in to:
+			SendMessage(Number)
 		print purpleClaro + "\r ✉ SMS - Flooder ✉ - Total enviados > %i" % i
 		print('')
 
